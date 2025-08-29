@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Incoming Call – Compact</title>
+  <style>
+    :root{
+      --panel:#1a1f2a;
+      --muted:#a3acc2;
+      --red:#ff4d4f;
+      --green:#28c76f;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:linear-gradient(152deg,#eef1f7,#e5e9f4);
+      font-family: ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      color:#111;
+    }
+
+    .wrap{max-width:700px;margin:40px auto;padding:16px}
+
+    .card{
+      background:var(--panel);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      color:var(--text);
+      padding:16px;
+    }
+    .incoming-compact{
+      display:flex;align-items:center;gap:14px;
+      min-height:84px;
+    }
+    .call-meta{flex:1;min-width:0}
+    .name{font-weight:700;letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:white}
+    .sub{font-size:12px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .actions{display:flex;gap:10px;align-items:center;flex:0 0 auto}
+    .btn-round{
+      width:44px;height:44px;border-radius:999px;border:none;cursor:pointer;
+      display:grid;place-items:center;box-shadow:0 10px 18px rgba(0,0,0,.25);
+      transition:transform .12s ease;
+    }
+    .btn-round:active{transform:scale(.96)}
+    .btn-red{background:var(--red)}
+    .btn-green{background:var(--green)}
+    .btn-round svg{width:20px;height:20px;fill:#fff}
+
+    #callDetails{
+      max-width:700px;margin:14px auto 26px;background:#fff;border-radius:12px;padding:12px;
+      box-shadow:0 8px 20px rgba(27,31,59,.06);color:#1f2430;
+      overflow-x:auto;
+    }
+    #callDetails pre{
+      white-space:pre-wrap;
+      word-wrap:break-word;
+      margin:0;
+      font-size:13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card incoming-compact" id="compactCard" aria-live="polite">
+      <div class="call-meta">
+        <div class="name" id="compactName">Name Surname</div>
+        <div class="sub" id="compactPhone">phone</div>
+      </div>
+      <div class="actions">
+        <button class="btn-round btn-red" id="compactDecline" title="Decline">
+          <svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.464 15.464 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V21a1 1 0 01-1 1C10.07 22 2 13.93 2 3a1 1 0 011-1h4.49a1 1 0 011 1c0 1.24.2 2.45.57 3.57a1 1 0 01-.24 1.02l-2.2 2.2z"/></svg>
+        </button>
+        <button class="btn-round btn-green" id="compactAccept" title="Answer">
+          <svg viewBox="0 0 24 24"><path d="M21 15.46v3.58a1 1 0 01-1.1 1 19.77 19.77 0 01-8.6-3.06 19.44 19.44 0 01-6-6 19.77 19.77 0 01-3.05-8.6A1 1 0 013.23 1h3.58a1 1 0 011 .85 13 13 0 00.72 2.86 1 1 0 01-.23 1.06l-2.2 2.2a16.91 16.91 0 006 6l2.2-2.2a1 1 0 011.06-.23 13 13 0 002.86.72 1 1 0 01.85 1z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="callDetails"></div>
+
+  <script>
+    let incomingCallData = {};
+    let callInterval; // Variable to hold the interval ID
+    const $ = (sel)=>document.querySelector(sel);
+    const setText = (sel,val)=>$(sel).textContent = val ?? '';
+    const setAll = ({name, from}={})=>{
+      setText('#compactName', name || '');
+      setText('#compactPhone', from || '');
+    };
+
+    async function getIncoming(){
+      try{
+        const res = await fetch('/api/get_incoming_call');
+        if(!res.ok) throw new Error('HTTP '+res.status);
+        const data = await res.json();
+        incomingCallData = data;
+        setAll(data);
+        $('#callDetails').innerHTML = '<pre>'+JSON.stringify(data,null,2)+'</pre>';
+      }catch(e){
+        console.error("Fetch error", e);
+      }
+    }
+
+    async function answer(){
+      try{
+        const res = await fetch('/api/answer_call',{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify(incomingCallData)
+        });
+        const data = await res.json();
+        $('#callDetails').innerHTML = '<pre>'+JSON.stringify(data,null,2)+'</pre>';
+        // Stop polling once call is answered
+        clearInterval(callInterval);
+      }catch(e){
+        $('#callDetails').innerHTML = '<pre>Failed to answer</pre>';
+      }
+    }
+
+    async function reject(){
+      try{
+        const res = await fetch('/api/reject_call',{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({id: incomingCallData.id})
+        });
+        const data = await res.json();
+        $('#callDetails').innerHTML = '<pre>'+JSON.stringify(data,null,2)+'</pre>';
+        // Stop polling once call is rejected
+        clearInterval(callInterval);
+      }catch(e){
+        $('#callDetails').innerHTML = '<pre>Failed to reject</pre>';
+      }
+    }
+
+    $('#compactAccept').addEventListener('click', answer);
+    $('#compactDecline').addEventListener('click', reject);
+
+    // Auto poll incoming call every 1 second
+    callInterval = setInterval(getIncoming, 5000);
+
+    // Fetch initial data immediately
+    getIncoming();
+  </script>
+</body>
+</html>
