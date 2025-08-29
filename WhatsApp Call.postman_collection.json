@@ -1,0 +1,262 @@
+{
+	"info": {
+		"_postman_id": "c115389f-9dbf-44bf-a4c0-cf962aca0ec8",
+		"name": "WhatsApp Call",
+		"description": "First make call on Promotional Bot then hit Incoming Call API.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14965750"
+	},
+	"item": [
+		{
+			"name": "Incoming Call",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "5hAaoWo6jaoL0Vp6kr6BqPtJplf2Q9WHtpUWOS%252Bp1d3GJ3R6PVbKsZur%252B5oYokiHaisZ7lpwOBJkofEoiYdpmMp%252F8GoPSNX%252BUGss2UeQ%252FK0VNi608uhVplnvvonzBgYm%252F933sNL%252BR0jmkvUqpfrANA%253D%253D",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://chat.bol7.com/api/chat/incomingcalls",
+					"protocol": "https",
+					"host": [
+						"chat",
+						"bol7",
+						"com"
+					],
+					"path": [
+						"api",
+						"chat",
+						"incomingcalls"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Answer Call",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "5hAaoWo6jaoL0Vp6kr6BqPtJplf2Q9WHtpUWOS%252Bp1d3GJ3R6PVbKsZur%252B5oYokiHaisZ7lpwOBJkofEoiYdpmMp%252F8GoPSNX%252BUGss2UeQ%252FK0VNi608uhVplnvvonzBgYm%252F933sNL%252BR0jmkvUqpfrANA%253D%253D",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 418,\n    \"sessioncalls\": {\n        \"sdp\": \"v=0\\r\\no=- 3965367661 3965367661 IN IP4 0.0.0.0\\r\\ns=-\\r\\nt=0 0\\r\\na=group:BUNDLE audio\\r\\na=msid-semantic:WMS *\\r\\nm=audio 38208 UDP/TLS/RTP/SAVPF 111\\r\\nc=IN IP4 192.168.1.214\\r\\na=sendrecv\\r\\na=mid:audio\\r\\na=msid:a2d476c9-52de-4dcb-a4a8-5dde0a5cc9a9 979e9dc8-423f-4143-9bee-d5e6603632cf\\r\\na=rtcp:9 IN IP4 0.0.0.0\\r\\na=rtcp-mux\\r\\na=ssrc:3695548471 cname:0247518c-2fb4-4dcc-9ef7-7711503f8308\\r\\na=rtpmap:111 opus/48000/2\\r\\na=candidate:cc413b2eee232a8f11e4ec14f2da1841 1 udp 2130706431 192.168.1.214 38208 typ host\\r\\na=candidate:4928f5caa10844d454e97e1af3038bee 1 udp 2130706431 192.168.122.1 44069 typ host\\r\\na=candidate:c0d4e944917573c67c17da402bcd6875 1 udp 2130706431 100.114.197.6 54669 typ host\\r\\na=candidate:dddc96182e54f5ed2585e66c33aa1d4e 1 udp 2130706431 fd7a:115c:a1e0::de01:c506 36109 typ host\\r\\na=candidate:580b5f32035da7f14a30ea7a8d826c67 1 udp 2130706431 172.17.0.1 41471 typ host\\r\\na=candidate:17df9441e1a496b7f666bdcfb3826610 1 udp 2130706431 172.19.0.1 47148 typ host\\r\\na=candidate:95a5144d22d827ac85a6c13daea75649 1 udp 2130706431 172.18.0.1 37005 typ host\\r\\na=candidate:96744b746ca3046d82efb394e4c2b69c 1 udp 2130706431 172.21.0.1 54714 typ host\\r\\na=candidate:0ad8db753210ce9554cf251a9e51e792 1 udp 1694498815 49.36.185.203 41471 typ srflx raddr 172.17.0.1 rport 41471\\r\\na=candidate:7f9ac0e27a669d7a0c94e6905f994e1e 1 udp 1694498815 49.36.185.203 44069 typ srflx raddr 192.168.122.1 rport 44069\\r\\na=candidate:0f3b412dcd29d04164d632fd05c6959f 1 udp 1694498815 49.36.185.203 54714 typ srflx raddr 172.21.0.1 rport 54714\\r\\na=candidate:e561fd838710cb12e3ec857899f83408 1 udp 1694498815 136.185.44.100 47148 typ srflx raddr 172.19.0.1 rport 47148\\r\\na=candidate:ec00ac89e8ba960aeb2c9e77d046f5cb 1 udp 1694498815 49.36.185.203 38208 typ srflx raddr 192.168.1.214 rport 38208\\r\\na=candidate:297898e4296c74660bb3ab65d8da90ec 1 udp 1694498815 49.36.185.203 37005 typ srflx raddr 172.18.0.1 rport 37005\\r\\na=end-of-candidates\\r\\na=ice-ufrag:sUfg\\r\\na=ice-pwd:plhyD5F5ZOqzrWo6lE9CcY\\r\\na=fingerprint:sha-256 A7:A6:2A:BB:0F:4B:A8:B3:FA:8A:20:7E:43:BC:44:90:70:DE:5E:01:19:6C:C1:8B:21:23:DB:1C:4D:A7:71:BA\\r\\na=setup:active\\r\\n\",\n        \"sdp_type\": \"answer\"\n    }\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://chat.bol7.com/api/chat/answercall",
+					"protocol": "https",
+					"host": [
+						"chat",
+						"bol7",
+						"com"
+					],
+					"path": [
+						"api",
+						"chat",
+						"answercall"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reject Call",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "5hAaoWo6jaoL0Vp6kr6BqPtJplf2Q9WHtpUWOS%252Bp1d3GJ3R6PVbKsZur%252B5oYokiHaisZ7lpwOBJkofEoiYdpmMp%252F8GoPSNX%252BUGss2UeQ%252FK0VNi608uhVplnvvonzBgYm%252F933sNL%252BR0jmkvUqpfrANA%253D%253D",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://chat.bol7.com/api/chat/rejectcall?id=428",
+					"protocol": "https",
+					"host": [
+						"chat",
+						"bol7",
+						"com"
+					],
+					"path": [
+						"api",
+						"chat",
+						"rejectcall"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "428"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Terminate Call",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "5hAaoWo6jaoL0Vp6kr6BqPtJplf2Q9WHtpUWOS%252Bp1d3GJ3R6PVbKsZur%252B5oYokiHaisZ7lpwOBJkofEoiYdpmMp%252F8GoPSNX%252BUGss2UeQ%252FK0VNi608uhVplnvvonzBgYm%252F933sNL%252BR0jmkvUqpfrANA%253D%253D",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://chat.bol7.com/api/chat/terminatecall?id=430",
+					"protocol": "https",
+					"host": [
+						"chat",
+						"bol7",
+						"com"
+					],
+					"path": [
+						"api",
+						"chat",
+						"terminatecall"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "430"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://chat.bol7.com/api/chat/login?username=*****&password=****",
+					"protocol": "https",
+					"host": [
+						"chat",
+						"bol7",
+						"com"
+					],
+					"path": [
+						"api",
+						"chat",
+						"login"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "*****"
+						},
+						{
+							"key": "password",
+							"value": "****"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Received Call",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "IyVBpvrJYaxzSWps8ebFSLAyzmgXAp6%252BH4ITxP9jiIB0ptSUTcl%252FovAqeVsRKe%252FYISkEQLMKUM%252Bif5CHFh1rMtdnxfjserDHWq%252BCffLyW5r3rZCRk5H7D10mh12sp0ezuEkmzjZX8w%252F6lZyohw3Dgg%253D%253D",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://chat.bol7.com/api/chat/ReceivedCall?id=470",
+					"protocol": "https",
+					"host": [
+						"chat",
+						"bol7",
+						"com"
+					],
+					"path": [
+						"api",
+						"chat",
+						"ReceivedCall"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "470"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Call History",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "5hAaoWo6jaoL0Vp6kr6BqPtJplf2Q9WHtpUWOS%252Bp1d3GJ3R6PVbKsZur%252B5oYokiHaisZ7lpwOBJkofEoiYdpmMp%252F8GoPSNX%252BUGss2UeQ%252FK0VNi608uhVplnvvonzBgYm%252F933sNL%252BR0jmkvUqpfrANA%253D%253D",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://chat.bol7.com/api/chat/receivecalls",
+					"protocol": "https",
+					"host": [
+						"chat",
+						"bol7",
+						"com"
+					],
+					"path": [
+						"api",
+						"chat",
+						"receivecalls"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
